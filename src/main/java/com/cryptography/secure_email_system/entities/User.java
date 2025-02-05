@@ -16,6 +16,10 @@ public class User {
     @Column(nullable = false)
     private String passwordHash; // Şifreyi hashlenmiş şekilde saklayacağız.
 
-    @Column(nullable = false, unique = true)
+    @Lob
+    @Column(nullable = false, unique = true, columnDefinition = "LONGTEXT")
     private String publicKey; // Kullanıcının public key'i
+
+    @Column(nullable = false, unique = true)
+    private String email; // Kullanıcının email adresi
 }
