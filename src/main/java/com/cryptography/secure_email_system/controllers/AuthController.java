@@ -32,12 +32,8 @@ public class AuthController {
         try {
             Optional<User> userOpt = userService.authenticateAndGetUser(loginRequest);
             if (userOpt.isPresent()) {
-                UserDTO userDTO = new UserDTO(userOpt.get().getId(), userOpt.get().getEmail(), userOpt.get().getUsername()); // Hassas bilgileri gizlemek için DTO kullan
-                return ResponseEntity.ok(ApiResponse.success("Login successful!", Map.of(
-                        "id", userDTO.getId(),
-                        "email", userDTO.getEmail(),
-                        "username", userDTO.getUsername()
-                )));
+                UserDTO userDTO = new UserDTO(userOpt); // Hassas bilgileri gizlemek için DTO kullan
+                return ResponseEntity.ok(ApiResponse.success("Login successful!", userDTO));
             }
             return ResponseEntity.badRequest().body(ApiResponse.error("Invalid username or password.", "The provided credentials are incorrect."));
         } catch (Exception e) {
